@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{% block content %}
+<a>After three attempts you will be locked out</a>
+<form class="login" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <button type="submit" class="button" style="margin: 10px;">Login</button>
+</form>
+
+<div class="button-row">
+  <a href="{% url 'signup' %}" class="button">Sign up</a>
+  <a href="{% url 'logout' %}" class="button">Logout</a>
+</div>
+{% endblock %}

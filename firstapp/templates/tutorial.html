@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Shoe Store {% endblock %}
+{% block content %}
+<h2 style="color: white;">Welcome to the Shoe Store Dashboard</h2>
+<h2 style="color: white;">This is where we will teach you how to use the shoe store effectively.</h2>
+<div style="background-color: white; width: 100%; border-radius: 10px;">
+    <div style="background-color: rgb(13, 64, 173); padding-left: 20px; padding-right: 20px; margin: 0 auto; width: 80%; position: relative;">
+        <h1 style="color: white; justify-self: center;">how to use orders</h1>
+        <h2 class="text">To view a customer's order you must enter their first and last name separated by a space.</h2>
+        <h2 class="text">For example, to view an order for Kyle Peck, you would enter "Kyle Peck" in the search bar and click on the blue submit button.</h2>
+        <img src="{% static 'firstapp/orders_before.png' %}" alt="orders_before Image" style="max-width: 50%; height:auto;">
+        <h2 class="text">After clicking submit, you will be taken to a page that shows you the order details for that customer there may be more than one order so they are sorted most recent on top.</h2>
+        <img src="{% static 'firstapp/orders_after.png' %}" alt="orders_after Image" style="max-width: 50%; height:auto;">
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 10px; background: linear-gradient(to bottom, rgb(13, 64, 173), rgb(13, 152, 173));"></div>
+    </div>
+    <div style="background-color: rgb(13, 152, 173); padding: 20px; ; margin: 0 auto; width: calc(100% - 40px); max-width: 80%;  position: relative;">
+        <h1 style="color: white; justify-self: center;">how to use email</h1>
+        <h2 class="text">To send a email to a customer you must enter their id into the box and you can get their customer id from the orders page.</h2>
+        <img src="{% static 'firstapp/orders_id.png' %}" alt="orders_id Image" style="max-width: 50%; height:auto;">
+        <div style="display: flex; padding-top: 20px;">
+            <img src="{% static 'firstapp/email_select.png' %}" alt="email_select Image" style="max-width: 50%; height:auto; padding-right: 15px;">   
+            <h2 class="text">After entering the customer id you can select the kind of email you want to send though templates that auto fill or send your own email by selecting from the drop down box.</h2>    
+        </div>
+        <h2 class="text">After selecting the email type you can press the submit button to send it to the customer and you will receive a confirmation message when it goes through.</h2>
+        <img src="{% static 'firstapp/email_sent.png' %}" alt="email_sent Image" style="max-width: 50%; height:auto;">
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 10px; background: linear-gradient(to bottom, rgb(13, 152, 173), rgb(5, 163, 124));"></div>
+    </div>
+    <div style="background-color: rgb(5, 163, 124); padding: 20px; ; margin: 0 auto; width: calc(100% - 40px); max-width: 80%;  position: relative;">
+        <h1 style="color: white; justify-self: center;">how to use notifications</h1>
+        <div style="display: flex; padding-top: 20px;">
+            <img src="{% static 'firstapp/notification_message.png' %}" alt="notification_message Image" style="max-width: 50%; height:auto;">
+            <div style="display: block;">
+                <h2 class="text">To send a notification to another employee you must first enter the message you want to send in the box that says message.</h2>
+                <h2 class="text">After you can select a group of employees to send the notification to from the drop down box like C for every cashier or you can select E to then select a specific employee form the drop down box bollow the role box.</h2>
+                <div style="display: block;">
+                    <img src="{% static 'firstapp/notification_role.png' %}" alt="notification_role Image" style="max-width: 45%; height:auto; padding-right: 15px;">
+                    <img src="{% static 'firstapp/notification_employee.png' %}" alt="notification_employee Image" style="max-width: 45%; height:auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

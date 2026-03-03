@@ -1,0 +1,538 @@
+/* General body */
+body {
+  background-color: #212121;
+  color: white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-content {
+  flex: 1;
+}
+
+/* Notification link */
+.notification {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  cursor: pointer;
+}
+
+/* Bell container */
+.bell-container {
+  position: relative;
+  width: 18px;
+  height: 25px;
+}
+
+/* Bell shape */
+.bell {
+  width: 100%;
+  height: 70%;
+  border: 2px solid white;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+}
+
+.bell::before,
+.bell::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+}
+
+.bell::before {
+  top: 100%;
+  width: 100%;
+  height: 2px;
+}
+
+.bell::after {
+  top: calc(100% + 4px);
+  width: 35%;
+  height: 2px;
+}
+
+/* 🔴 RED CIRCLE (NUMBER INCLUDED) */
+.bell-container::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 4px;
+  font-size: 60%;
+  background-color: red;
+  color: white;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Hide badge when empty */
+.notification[data-count=""] .bell-container::after {
+  display: none;
+}
+
+/* Hover animation */
+.notification:hover .bell-container {
+  animation: bell-animation 650ms ease-out;
+}
+
+@keyframes bell-animation {
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-15deg) scale(1.1); }
+  60% { transform: rotate(10deg) scale(1.1); }
+  80% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 📱 Mobile fixes */
+@media (max-width: 600px) {
+  .bell-container {
+    width: 18px;
+    height: 25px;
+  }
+
+  .bell-container::after {
+    top: -4px;
+    right: -4px;
+    min-width: 10px;
+    height: 10px;
+    font-size: 55%;
+  }
+}
+
+
+/* Avatar */
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* From Uiverse.io by cssbuttons-io */
+.button {
+ text-decoration: none;
+ appearance: button;
+ background-color: #1899D6;
+ border: solid transparent;
+ border-radius: 16px;
+ border-width: 0 0 4px;
+ box-sizing: border-box;
+color: white !important;
+ cursor: pointer;
+ display: inline-block;
+ font-size: 15px;
+ font-weight: 700;
+ letter-spacing: .8px;
+ line-height: 20px;
+ margin: 0;
+ outline: none;
+ overflow: visible;
+ padding: 13px 19px;
+ text-align: center;
+ text-transform: uppercase;
+ touch-action: manipulation;
+ transform: translateZ(0);
+ transition: filter .2s;
+ user-select: none;
+ -webkit-user-select: none;
+ vertical-align: middle;
+ white-space: nowrap;
+}
+
+.button:after {
+ background-clip: padding-box;
+ background-color: #1CB0F6;
+ border: solid transparent;
+ border-radius: 16px;
+ border-width: 0 0 4px;
+ bottom: -4px;
+ content: "";
+ left: 0;
+ position: absolute;
+ right: 0;
+ top: 0;
+ z-index: -1;
+}
+
+.button:main, .button:focus {
+ user-select: auto;
+}
+
+.button:hover:not(:disabled) {
+ filter: brightness(1.1);
+ text-decoration: none;
+}
+
+.button:disabled {
+ cursor: auto;
+}
+
+.button:active:after {
+ border-width: 0 0 0px;
+}
+
+.button:active {
+ padding-bottom: 10px;
+}
+
+.button-row {
+  display: flex;
+  gap: 15px;
+}
+
+@media (max-width: 600px) {
+  .button-row {
+    gap: 10px;
+  }
+}
+
+.full-width-white {
+  background-color: white;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.full-width-white .inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.text {
+  color: white;
+  font-size: 25px;
+}
+
+@media (max-width: 600px) {
+    .text{
+        color: white;
+        font-size: 10px;
+    }
+}
+
+.footer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.footer-table th {
+  text-align: left;
+  color: white;
+  font-size: 15px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-table td {
+  vertical-align: top;
+  padding-top: 15px;
+}
+
+.footer-table a {
+  display: block;
+  color: #4da3ff;
+  text-decoration: none;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.footer-table a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .footer-table,
+  .footer-table thead,
+  .footer-table tbody,
+  .footer-table tr,
+  .footer-table th,
+  .footer-table td {
+    display: block;
+  }
+
+  .footer-table th {
+    border-bottom: none;
+    margin-top: 20px;
+  }
+}
+
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.shoe_img {
+  display: flex;
+  width: 100vw;
+  margin: 0;
+}
+
+.img-wrapper {
+  position: relative;
+  width: 100vw;   /* 👈 force full width */
+}
+
+.shoe_img-img {
+  width: 100vw;   /* 👈 stretch image */
+  height: auto;
+  display: block;
+}
+
+
+.shoe_img-text {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  z-index: 2;
+  color: white;
+  font-size: 55px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px #212121;
+  text-align: center;
+}
+
+.shoe_img-btn {
+  position: absolute;
+  bottom: 250px;      /* below text */
+  right: 250px;
+  z-index: 2;
+  text-decoration: none;
+  color: white !important;
+}
+
+/* 50%*/
+.img-wrapper50 {
+    display: flex;      /* side by side */
+    margin: 0;
+    padding: 0;
+}
+
+.img-box50 {
+    position: relative; /* for absolute text */
+    flex: 1;            /* each takes half width automatically */
+}
+
+.shoe_img-img50 {
+    width: 100%;        /* fill its container */
+    height: auto;
+    display: block;
+}
+
+.shoe_img-text50 {
+  position: absolute;      /* put it over the image */
+  bottom: 60px;               /* distance from bottom of image */
+  left: 50%;           /* center horizontally */
+  transform: translateX(-50%); /* actually center it */
+  color: white;            /* visible on image */
+  font-size: 36px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px #212121; /* makes text readable on any background */
+  text-align: center;
+  z-index: 2;              /* above image */
+}
+
+.shoe_img-btn50 {
+  position: absolute;
+  bottom: 20px;      /* below text */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  text-decoration: none;
+  color: white !important;
+}
+
+/* 33%*/
+.img-wrapper33 {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+
+.img-box33 {
+  flex: 1;
+  position: relative;
+}
+
+
+.shoe_img-img33 {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+
+.shoe_img-text33 {
+  position: absolute;      /* put it over the image */
+  bottom: 100px;               /* distance from bottom of image */
+  left: 50%;           /* center horizontally */
+  transform: translateX(-50%); /* actually center it */
+  color: white;            /* visible on image */
+  font-size: 36px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px #212121; /* makes text readable on any background */
+  text-align: center;
+  z-index: 2;              /* above image */
+}
+
+.shoe_img-text33-2 {
+  position: absolute;      /* put it over the image */
+  bottom: 80px;               /* distance from bottom of image */
+  left: 50%;           /* center horizontally */
+  transform: translateX(-50%); /* actually center it */
+  color: white;            /* visible on image */
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px #212121; /* makes text readable on any background */
+  text-align: center;
+  z-index: 2;              /* above image */
+}
+
+.shoe_img-btn33 {
+  position: absolute;
+  bottom: 40px;      /* below text */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  text-decoration: none;
+  color: white !important;
+}
+
+.shoe_img-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.image-wrapper42 {
+  position: relative;
+  display: inline-block; /* 👈 size = image size */
+}
+
+.image-wrapper-img42 {
+  display: block;
+  max-width: 400px;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.image-box42 {
+  position: absolute;
+  inset: 0;              /* 👈 fills image exactly */
+
+  border-radius: 16px;
+  pointer-events: none;  /* clicks go through */
+  z-index: 1;
+}
+
+.page-layout42 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+.form-section42 {
+  width: 40%;
+}
+
+.image-section42 {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.shoe_image42 {
+  position: relative;
+  z-index: 10;
+  display: block;
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+
+.cart-row {
+  display: flex;             /* left + right */
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+  color: white;
+}
+
+.cart-text {
+  display: flex;
+  flex-direction: column;     /* 👈 STACK ONLY THE TEXT */
+  gap: 6px;                   /* spacing between lines */
+  flex: 1;
+}
+
+@media (max-width: 899px) {
+  .shoe_img-text {
+    top: auto;
+    bottom: 80px;
+    right: 50%;
+    transform: translateX(50%);
+    font-size: 18px;
+  }
+
+  .shoe_img-btn {
+    top: auto;
+    bottom: 30px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .shoe_img-text50 {
+    font-size: 20px;
+  }
+
+  .shoe_img-text33-2 {
+    font-size: 10px;
+  }
+
+  .shoe_img {
+    flex-direction: column;
+  }
+
+  .img-wrapper33 {
+    flex-direction: column;
+  }
+
+  .page-layout42 {
+    flex-direction: column;
+  }
+
+  .form-section42,
+  .image-section42 {
+    width: 100%;
+  }
+
+}
