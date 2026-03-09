@@ -24,3 +24,6 @@ def dash(request):
 @xframe_options_exempt
 def test(request):
     return render(request, "test.html")
+@xframe_options_exempt
+def orders(request):
+    return render(request, "orders.html")
