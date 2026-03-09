@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rd!93-l@t+u+@8(kpkrb(-5n#*u%vazuef!psrn9(j=9x10%#('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["homework42.pythonanywhere.com"]
 
-
+X_FRAME_OPTIONS = "SAMEORIGIN"
 # Application definition
 
 INSTALLED_APPS = [
@@ -62,7 +62,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'firstapp.context_processors.unread_notifications',
             ],
         },
     },
@@ -117,6 +116,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}nightly{% endblock %}
+
+{% block content %}
+<div class="full-bleed">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        iframe {
+            width: 100vw;
+            height: 90vh;
+            border: 0;
+            display: block;
+        }
+    </style>
+
+    <iframe src="https://script.nightly.pw"></iframe>
+</div>
+{% endblock %}
