@@ -11,4 +11,5 @@ urlpatterns = [
     path("web/", views.web, name="web"),
     path("dash/", views.dash, name="dash"),
     path("test/", views.test, name="test"),
+    path("minecraft/", views.minecraft, name="minecraft"),
 ]

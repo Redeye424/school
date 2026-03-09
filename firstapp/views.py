@@ -27,3 +27,6 @@ def test(request):
 @xframe_options_exempt
 def orders(request):
     return render(request, "orders.html")
+@xframe_options_exempt
+def minecraft(request):
+    return render(request, "minecraft.html")
