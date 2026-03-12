@@ -12,34 +12,40 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" />
 
     <link rel="stylesheet" href="{% static 'firstapp/style.css' %}"/>
-
+    {% block extra_head %}{% endblock %}
   </head>
   <body style="background-color: #212121; color: white;">
     <nav style="background-color: #212121;" class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand" href="#" onclick="create('{% url "home" %}'); return false;">Home</a>
+      <a class="navbar-brand" href="{% url 'home' today_str %}">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="create('{% url "sandpainting" %}'); return false;">sandpainting</a>
+              <a class="nav-link" href="{% url "sandpainting" today_str %}">sandpainting</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="create('{% url "cookie" %}'); return false;">cookieclicker</a>
+              <a class="nav-link" href="{% url "cookie" today_str  %}">cookieclicker</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="create('{% url "burrito" %}'); return false;">burrito guy</a>
+              <a class="nav-link" href="{% url "burrito" today_str %}">burrito guy</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="create('{% url "web" %}'); return false;">simple web</a>
+              <a class="nav-link" href="{% url "web" today_str %}">simple web</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="create('{% url "dash" %}'); return false;">geometry dash</a>
+              <a class="nav-link" href="{% url "dash" today_str %}">geometry dash</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="create('{% url "minecraft" %}'); return false;">minecraft</a>
+              <a class="nav-link" href="{% url "minecraft" today_str %}">minecraft</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="color:red">click allow pop ups then reload for about:blank</a>
+              <a class="nav-link" href="{% url "RetroBowl" today_str %}">RetroBowl</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "ships3d" today_str %}">Ships 3D</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="create('{% url 'home' today_str %}'); return false;">about blank</a>
             </li>
           </ul>
         </div>
@@ -62,10 +68,10 @@
           iframe.style.width = "100%";
           iframe.style.height = "100%";
           iframe.src = url;
-
           win.document.body.appendChild(iframe);
           window.location.replace("https://www.google.com");
         }
     </script>
+    {% block extra_scripts %}{% endblock %}
   </body>
 </html>
