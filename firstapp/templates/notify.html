@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Notify Users{% endblock %}
+
+{% block content %}
+
+<h2 style="color:white;">Send messages</h2>
+
+<form method="POST" action="{% url 'notify' today_str %}">
+{% csrf_token %}
+
+{% if user.is_authenticated and user.profile.rank < 5 %}
+{% else %}
+
+<label for="role-select" style="color:white;">Select Role:</label> <select id="role-select" name="role"> <option value="">None</option> <option value="A">All Users</option>
+{% for role in roles %} <option value="{{ role }}">{{ role }}</option>
+{% endfor %} </select>
+
+<br><br>
+
+{% endif %}
+
+<label for="User-select" style="color:white;">Select User:</label> <select id="User-select" name="User"> <option value="">None (use role instead)</option>
+{% for User in Users %} <option value="{{ User.username }}">{{ User.username }}</option>
+{% endfor %} </select>
+
+<br><br>
+
+<label for="message" style="color:white;">Message:</label><br>
+
+<textarea id="message" name="message" rows="4" cols="50" placeholder="Enter your message here..."></textarea>
+
+<br><br>
+
+<button type="submit" class="button">Send Notification</button>
+
+{% if success %}
+
+<p style="color:green;">{{ success }}</p>
+{% endif %}
+
+</form>
+<h2 style="color: white;">Messages</h2>
+{% if notifications %}
+  {% for notification in notifications %}
+    <div style="border: 1px solid white; padding: 10px; margin: 10px 0; color: white;">
+      <p>{{ notification.message }}</p>
+      <small>{{ notification.created_at }}</small>
+      <small> from {{ notification.user.username }}</small>
+    </div>
+  {% endfor %}
+{% else %}
+  <p style="color: white;">No Messages.</p>
+{% endif %}
+
+{% endblock %}
