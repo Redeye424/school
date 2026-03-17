@@ -38,7 +38,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url "minecraft" today_str %}">minecraft</a>
             </li>
-<<<<<<< HEAD
             <li class="nav-item">
               <a class="nav-link" href="{% url "RetroBowl" today_str %}">RetroBowl</a>
             </li>
@@ -46,13 +45,63 @@
               <a class="nav-link" href="{% url "ships3d" today_str %}">Ships 3D</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{% url "pizza" today_str %}">pizza</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="#" onclick="create('{% url 'home' today_str %}'); return false;">about blank</a>
             </li>
-=======
->>>>>>> c21b9129158b5028554084209d55279f97d7b67e
+            {% if user.is_authenticated and user.profile.rank == 10 %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">admin</a>
+            </li>
+            {% endif %}
           </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'notify' today_str %}" class="notification"
+                       data-count="{% if unread_notifications > 0 %}
+                                        unread_notifications
+                                    {% if unread_notifications >= 100 %}99+
+                                    {% else %}{{ unread_notifications }}{% endif %}
+                                    {% endif %}">
+                        <div class="bell-container">
+                            <div class="bell">
+                            </div>
+                        </div>
+                    </a>
+                </li>
+              <!-- Avatar -->
+                <li class="nav-item nav-icon">
+                  <div style="position: relative; display: inline-block;">
+
+                    <a href="{% url 'login' today_str %}">
+                      <img src="{% static 'firstapp/avatardefault.png' %}"
+                           style="width:40px; height:40px;">
+                    </a>
+
+                        <!--<span id="notification-badge" style="
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            min-width: 16px;
+                            height: 16px;
+                            padding: 0 4px;
+                            font-size: 10px;
+                            background-color: red;
+                            color: white;
+                            border-radius: 999px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            z-index: 20;
+                            transform: translate(0px, -2px);
+                          "></span> -->
+
+                  </div>
+                </li>
+
+            </ul>
         </div>
-      </div>
     </nav>
     {% block full_bleed %}{% endblock %}
     <div class="container">{% block content %} {% endblock %}</div>
@@ -75,6 +124,105 @@
           window.location.replace("https://www.google.com");
         }
     </script>
+    <script>
+        function updateNotifications() {
+          fetch("/unread-count/")
+            .then(response => response.json())
+            .then(data => {
+
+              const notification = document.querySelector(".notification");
+
+              if (data.count > 0) {
+                notification.setAttribute("data-count", data.count >= 100 ? "99+" : data.count);
+              } else {
+                notification.setAttribute("data-count", "");
+              }
+
+            });
+        }
+
+        /* check every 5 seconds */
+        setInterval(updateNotifications, 5000);
+
+        /* run once on page load */
+        updateNotifications();
+    </script>
+    <style>
+        .bell-container {
+          position: relative;
+          width: 18px;
+          height: 25px;
+        }
+
+        /* Bell shape */
+        .bell {
+          width: 100%;
+          height: 70%;
+          border: 2px solid white;
+          border-radius: 10px 10px 0 0;
+          position: relative;
+        }
+
+        .bell::before,
+        .bell::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          background: white;
+        }
+
+        .bell::before {
+          top: 100%;
+          width: 100%;
+          height: 2px;
+        }
+
+        .bell::after {
+          top: calc(100% + 4px);
+          width: 35%;
+          height: 2px;
+        }
+
+        /* 🔴 RED CIRCLE (NUMBER INCLUDED) */
+        .bell-container::after {
+          content: attr(data-count);
+          position: absolute;
+          top: -6px;
+          right: -6px;
+          min-width: 14px;
+          height: 14px;
+          padding: 0 4px;
+          font-size: 60%;
+          background-color: red;
+          color: white;
+          border-radius: 999px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 999;
+        }
+
+        .notification[data-count=""] .bell-container::after {
+          display: none;
+        }
+
+        /* Hover animation */
+        .notification:hover .bell-container {
+          animation: bell-animation 650ms ease-out;
+        }
+
+        @keyframes bell-animation {
+          20% { transform: rotate(15deg); }
+          40% { transform: rotate(-15deg) scale(1.1); }
+          60% { transform: rotate(10deg) scale(1.1); }
+          80% { transform: rotate(-10deg); }
+          100% { transform: rotate(0deg); }
+        }
+
+    </style>
     {% block extra_scripts %}{% endblock %}
   </body>
+</html>
+
 </html>
