@@ -89,11 +89,12 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 @login_required
-
 def notify_view(request, today_str):
     roles = list(Profile.objects.values_list('role', flat=True).distinct()) + ["A"]
     users = User.objects.all()
     notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
+
+    # mark as read
     for notification in notifications:
         notification.read = True
         notification.save()
@@ -102,36 +103,50 @@ def notify_view(request, today_str):
         role = request.POST.get("role")
         user_selected = request.POST.get("User")
         message = request.POST.get("message")
+
         if message:
 
-            # Send to ONE USER
+            # ONE USER
             if user_selected and user_selected != "all":
                 user = User.objects.get(username=user_selected)
-                Notification.objects.create(user=user, message=message)
+                Notification.objects.create(
+                    user=user,
+                    sender=request.user,
+                    message=message
+                )
 
-            # Send to ALL USERS
+            # ALL USERS
             elif role == "A":
                 for user in users:
-                    Notification.objects.create(user=user, message=message)
+                    Notification.objects.create(
+                        user=user,
+                        sender=request.user,
+                        message=message
+                    )
 
-            # Send to ROLE
+            # ROLE
             elif role:
                 profiles = Profile.objects.filter(role=role)
                 for profile in profiles:
-                    Notification.objects.create(user=profile.user, message=message)
+                    Notification.objects.create(
+                        user=profile.user,
+                        sender=request.user,
+                        message=message
+                    )
 
             return render(request, "notify.html", {
                 "roles": roles,
                 "Users": users,
-                'notifications': notifications,
+                "notifications": notifications,
                 "success": "Notifications sent!"
             })
 
     return render(request, "notify.html", {
         "roles": roles,
         "Users": users,
-        'notifications': notifications
+        "notifications": notifications
     })
+
 @login_required
 def notifications_view(request, today_str):
     notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
