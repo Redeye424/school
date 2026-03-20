@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} My Notifications {% endblock %}
+{% block content %}
+<h2 style="color: white;">My Notifications</h2>
+{% if notifications %}
+  {% for notification in notifications %}
+    <div style="border: 1px solid white; padding: 10px; margin: 10px 0; color: white;">
+      <p>{{ notification.message }}</p>
+      <small>{{ notification.created_at }}</small>
+      <small> from {{ notification.sender.username }}</small>
+    </div>
+  {% endfor %}
+{% else %}
+  <p style="color: white;">No notifications.</p>
+{% endif %}
+{% endblock %}

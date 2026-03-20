@@ -62,6 +62,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'firstapp.context_processors.today_str',
+                'firstapp.context_processors.week_str',
+                'firstapp.context_processors.month_str',
+                'firstapp.context_processors.notifications_context',
+
             ],
         },
     },
@@ -125,6 +130,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #redirect to home URL after login
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "/login-redirect/"
 
 LOGIN_URL = '/account/login/'
