@@ -28,3 +28,4 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"From {self.sender} to {self.user}: {self.message[:50]}"
+
