@@ -45,7 +45,7 @@
               <a class="nav-link" href="{% url "ships3d" today_str %}">Ships 3D</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url "pizza" today_str %}">pizza</a>
+              <a class="nav-link" href="{% url 'pizza' today_str %}">Manger</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" onclick="create('{% url 'home' today_str %}'); return false;">about blank</a>
@@ -53,6 +53,9 @@
             {% if user.is_authenticated and user.profile.rank == 10 %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'admin:index' %}">admin</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'code' %}">code</a>
             </li>
             {% endif %}
           </ul>
@@ -223,6 +226,4 @@
     </style>
     {% block extra_scripts %}{% endblock %}
   </body>
-</html>
-
 </html>

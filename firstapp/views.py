@@ -16,52 +16,110 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.http import Http404
+
 
 today_str = get_daily_code()
 monthly_str = get_monthly_code()
 weekly_str = get_weekly_code()
 
 @xframe_options_exempt
-def home(request, today_str):
+def home(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "home.html")
 @xframe_options_exempt
-def home_month(request, monthly_str):
-    return render(request, "home.html")
-@xframe_options_exempt
-def home_week(request, weekly_str):
-    return render(request, "home.html")
-@xframe_options_exempt
-def sandpainting(request, today_str):
+def sandpainting(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "sandpainting.html")
 @xframe_options_exempt
-def cookie(request, today_str):
+def cookie(request, code_str):
+    if today_str != get_daily_code():
+        raise Http404("Invalid code")
     return render(request, "cookie.html")
 @xframe_options_exempt
-def burrito(request, today_str):
+def burrito(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "burrito.html")
 @xframe_options_exempt
-def web(request, today_str):
+def web(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "web.html")
 @xframe_options_exempt
-def dash(request, today_str):
+def dash(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "dash.html")
 @xframe_options_exempt
-def test(request, today_str):
+def test(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "test.html")
 @xframe_options_exempt
 def orders(request):
     return render(request, "orders.html")
 @xframe_options_exempt
-def minecraft(request, today_str):
+def minecraft(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "minecraft.html")
 @xframe_options_exempt
-def RetroBowl(request, today_str):
+def RetroBowl(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "Retro Bowl.html")
 @xframe_options_exempt
-def ships3d(request, today_str):
+def ships3d(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "ships3d.html")
 @xframe_options_exempt
-def pizza(request, today_str):
+def pizza(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "pizza.html")
 @xframe_options_exempt
 def code(request):
@@ -76,12 +134,12 @@ class signup_view(CreateView):
   template_name = "registration/signup.html"
 
 @login_required
-def logout_view(request, today_str):
+def logout_view(request, code_str):
     logout(request)
-    return redirect("home", today_str=today_str)
+    return redirect("home", code_str=today_str)
 
 def login_redirect(request):
-    return redirect('home', today_str=today_str)
+    return redirect('home', code_str=today_str)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -89,7 +147,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 @login_required
-def notify_view(request, today_str):
+def notify_view(request, code_str):
     roles = list(Profile.objects.values_list('role', flat=True).distinct()) + ["A"]
     users = User.objects.all()
     notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
@@ -133,19 +191,30 @@ def notify_view(request, today_str):
                         sender=request.user,
                         message=message
                     )
-
+            if (
+                code_str != get_daily_code() and
+                code_str != get_weekly_code() and
+                code_str != get_monthly_code()
+            ):
+                raise Http404("Invalid code")
             return render(request, "notify.html", {
                 "roles": roles,
                 "Users": users,
                 "notifications": notifications,
                 "success": "Notifications sent!"
             })
-
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "notify.html", {
         "roles": roles,
         "Users": users,
         "notifications": notifications
     })
+
 
 @login_required
 def notifications_view(request, today_str):
