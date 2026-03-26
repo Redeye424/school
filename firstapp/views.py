@@ -43,7 +43,11 @@ def sandpainting(request, code_str):
     return render(request, "sandpainting.html")
 @xframe_options_exempt
 def cookie(request, code_str):
-    if today_str != get_daily_code():
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
         raise Http404("Invalid code")
     return render(request, "cookie.html")
 @xframe_options_exempt
