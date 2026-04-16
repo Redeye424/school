@@ -43,7 +43,11 @@ def sandpainting(request, code_str):
     return render(request, "sandpainting.html")
 @xframe_options_exempt
 def cookie(request, code_str):
-    if today_str != get_daily_code():
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
         raise Http404("Invalid code")
     return render(request, "cookie.html")
 @xframe_options_exempt
@@ -134,12 +138,12 @@ class signup_view(CreateView):
   template_name = "registration/signup.html"
 
 @login_required
-def logout_view(request, today_str):
+def logout_view(request, code_str):
     logout(request)
-    return redirect("home", today_str=today_str)
+    return redirect("home", code_str=today_str)
 
 def login_redirect(request):
-    return redirect('home', today_str=today_str)
+    return redirect('home', code_str=today_str)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -147,9 +151,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 @login_required
-
-@login_required
-def notify_view(request, today_str):
+def notify_view(request, code_str):
     roles = list(Profile.objects.values_list('role', flat=True).distinct()) + ["A"]
     users = User.objects.all()
     notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
@@ -193,19 +195,30 @@ def notify_view(request, today_str):
                         sender=request.user,
                         message=message
                     )
-
+            if (
+                code_str != get_daily_code() and
+                code_str != get_weekly_code() and
+                code_str != get_monthly_code()
+            ):
+                raise Http404("Invalid code")
             return render(request, "notify.html", {
                 "roles": roles,
                 "Users": users,
                 "notifications": notifications,
                 "success": "Notifications sent!"
             })
-
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
     return render(request, "notify.html", {
         "roles": roles,
         "Users": users,
         "notifications": notifications
     })
+
 
 @login_required
 def notifications_view(request, today_str):

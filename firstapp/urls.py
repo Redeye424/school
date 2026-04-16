@@ -7,7 +7,6 @@ today_str = get_daily_code()
 monthly_str = get_monthly_code()
 weekly_str = get_weekly_code()
 
-print(today_str)
 urlpatterns = [
     path("", views.orders, name="orders"),
     path('home<str:code_str>/', views.home, name="home"),
