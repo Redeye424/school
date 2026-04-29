@@ -1,21 +1,57 @@
-{% extends "base.html" %}
-{% block title %}minecraft{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eaglercraft Embed</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
 
-{% block content %}
-<div class="full-bleed">
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        iframe {
-            width: 100vw;
-            height: 90vh;
-            border: 0;
-            display: block;
-        }
-    </style>
+    iframe {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      border: 0;
+    }
 
-    <iframe src="https://eaglercraft.q13x.com/1.8-js/"></iframe>
-</div>
-{% endblock %}
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 10;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="overlay">Click to Start</div>
+
+  <iframe
+    id="game"
+    tabindex="0"
+    src="https://eaglercraft.q13x.com/1.8-js/">
+  </iframe>
+
+  <script>
+    const overlay = document.getElementById("overlay");
+    const iframe = document.getElementById("game");
+
+    overlay.addEventListener("click", () => {
+      overlay.style.display = "none";
+
+      // focus iframe after user interaction (important for Chromebook/Chrome)
+      iframe.focus();
+    });
+  </script>
+
+</body>
+</html>
