@@ -50,6 +50,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#" onclick="create('{% url 'home' today_str %}'); return false;">about blank</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color: red; font-size: 12px;"></a>
+            </li>
             {% if user.is_authenticated and user.profile.rank == 10 %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'admin:index' %}">admin</a>
