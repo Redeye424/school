@@ -1,271 +1,57 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}Minecraft 1.8.8{% endblock %}</title>
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{% static 'firstapp/style.css' %}"/>
-
+  <title>Eaglercraft Embed</title>
   <style>
-    html, body {
-      height: 100%;
+    body {
       margin: 0;
-      padding: 0;
-      overflow: hidden; /* prevents scrolling */
-      background-color: black;
+      overflow: hidden;
     }
 
-    /* Navbar fixed at top */
-    nav.navbar {
+    iframe {
       position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 10000;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      border: 0;
     }
 
-    /* Game fills remaining space */
-    #game_frame {
-      position: absolute;
-      top: 56px; /* navbar height */
-      left: 0;
-      right: 0;
-      bottom: 0; /* fill to bottom */
-      width: 100%;
-      height: auto; /* automatic to fill remaining space */
-      background-color: black;
-    }
-
-    /* Sidebar ads below navbar */
-    #sidebarad1,
-    #sidebarad2 {
+    #overlay {
       position: fixed;
-      top: 56px; /* below navbar */
-      width: 160px;
-      height: 600px;
-      z-index: 9999;
-    }
-
-    #sidebarad1 { left: 0; }
-    #sidebarad2 { right: 0; }
-
-    .sidebar-close {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 22px;
-      height: 22px;
-      line-height: 22px;
-      text-align: center;
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      font-size: 14px;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
       cursor: pointer;
-      user-select: none;
       z-index: 10;
+      user-select: none;
     }
-
-    .bell-container {
-        position: relative;
-        width: 18px;
-        height: 25px;
-    }
-
-        /* Bell shape */
-    .bell {
-        width: 100%;
-        height: 70%;
-        border: 2px solid white;
-        border-radius: 10px 10px 0 0;
-        position: relative;
-    }
-
-    .bell::before,
-    .bell::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        background: white;
-    }
-
-    .bell::before {
-        top: 100%;
-        width: 100%;
-        height: 2px;
-    }
-
-    .bell::after {
-        top: calc(100% + 4px);
-        width: 35%;
-        height: 2px;
-    }
-
-        /* 🔴 RED CIRCLE (NUMBER INCLUDED) */
-    .bell-container::after {
-        content: attr(data-count);
-        position: absolute;
-        top: -6px;
-        right: -6px;
-        min-width: 14px;
-        height: 14px;
-        padding: 0 4px;
-        font-size: 60%;
-        background-color: red;
-        color: white;
-        border-radius: 999px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 999;
-    }
-
-    .notification[data-count=""] .bell-container::after {
-        display: none;
-    }
-
-    /* Hover animation */
-    .notification:hover .bell-container {
-        animation: bell-animation 650ms ease-out;
-    }
-
-    @keyframes bell-animation {
-        20% { transform: rotate(15deg); }
-        40% { transform: rotate(-15deg) scale(1.1); }
-        60% { transform: rotate(10deg) scale(1.1); }
-        80% { transform: rotate(-10deg); }
-        100% { transform: rotate(0deg); }
-    }
-
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #212121;">
-    <a class="navbar-brand" href="{% url 'home' today_str %}">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="{% url 'sandpainting' today_str %}">sandpainting</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'cookie' today_str %}">celeste</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'burrito' today_str %}">burrito guy</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'web' today_str %}">simple web</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'dash' today_str %}">geometry dash</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'minecraft' today_str %}">minecraft</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'RetroBowl' today_str %}">RetroBowl</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'ships3d' today_str %}">Ships 3D</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'pizza' today_str %}">Manger</a></li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="create('{% url 'home' today_str %}'); return false;">about blank</a>
-        </li>
-            {% if user.is_authenticated and user.profile.rank == 10 %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'admin:index' %}">admin</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'code' %}">code</a>
-            </li>
-            {% endif %}
-          </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a href="{% url 'notify' today_str %}" class="notification"
-                    data-count="{% if unread_notifications > 0 %}
-                                    {{ unread_notifications }}
-                                {% if unread_notifications >= 100 %}99+
-                                {% else %}{{ unread_notifications }}{% endif %}
-                                {% endif %}">
-                    <div class="bell-container">
-                      <div class="bell">
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              <!-- Avatar -->
-                <li class="nav-item nav-icon">
-                  <div style="position: relative; display: inline-block;">
 
-                    <a href="{% url 'login' today_str %}">
-                      <img src="{% static 'firstapp/avatardefault.png' %}"
-                           style="width:40px; height:40px;">
-                    </a>
+  <div id="overlay">Click to Start</div>
 
-                        <!--<span id="notification-badge" style="
-                            position: absolute;
-                            bottom: 0;
-                            left: 0;
-                            min-width: 16px;
-                            height: 16px;
-                            padding: 0 4px;
-                            font-size: 10px;
-                            background-color: red;
-                            color: white;
-                            border-radius: 999px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            z-index: 20;
-                            transform: translate(0px, -2px);
-                          "></span> -->
+  <iframe
+    id="game"
+    tabindex="0"
+    src="https://eaglercraft.q13x.com/1.8-js/">
+  </iframe>
 
-                  </div>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
-
-  <!-- Game Frame -->
-  <div id="game_frame"></div>
-
-  <!-- Sidebar Ads -->
-  <div id="sidebarad1">
-    <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
-  </div>
-  <div id="sidebarad2">
-    <div class="sidebar-close" onclick="this.parentElement.style.display='none'">✕</div>
-  </div>
-
-  <!-- Eaglercraft Loader -->
-  <script type="text/javascript">
-    window.disableUserscripts = true;
-    window.__eaglercraftLoaderClient = {
-      container: "game_frame",
-      name: "EaglercraftX 1.8",
-      file: "net.lax1dude.eaglercraft.v1_8.client",
-      cid: "bafybeigvjbotqwm5mdjkvfqwxylpvap35lmya4d3jo6sn76pqzm2gub52i",
-      path: "",
-      download: "https://cdn.jsdelivr.net/gh/genizy/mc@main/data/1.8.8.gz",
-      dlSize: 14027305,
-      gzip: true
-    };
-  </script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/genizy/mc@main/shared/loader.js"></script>
-
-  <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
-  <!-- About Blank Button Function -->
   <script>
-    function create(url) {
-      const win = window.open("about:blank", "_blank");
-      if (!win) return;
-      const iframe = win.document.createElement("iframe");
-      iframe.style.border = "none";
-      iframe.style.width = "100%";
-      iframe.style.height = "100vh";
-      iframe.src = url;
-      win.document.body.appendChild(iframe);
-      window.location.replace("https://www.google.com");
-    }
+    const overlay = document.getElementById("overlay");
+    const iframe = document.getElementById("game");
+
+    overlay.addEventListener("click", () => {
+      overlay.style.display = "none";
+
+      // focus iframe after user interaction (important for Chromebook/Chrome)
+      iframe.focus();
+    });
   </script>
+
 </body>
 </html>

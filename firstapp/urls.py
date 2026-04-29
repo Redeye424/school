@@ -30,4 +30,7 @@ urlpatterns = [
     path("account/login/", auth_views.LoginView.as_view(), name="login"),
     path("unread-count/", views.unread_count, name="unread_count"),
     path("login-redirect/", views.login_redirect, name="login_redirect"),
+    path("obby<str:code_str>/", views.obby, name="obby"),
+    path("Brotato<str:code_str>/", views.Brotato, name="Brotato"),
+    path("Soap<str:code_str>/", views.Soap, name="Soap"),
 ]

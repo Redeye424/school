@@ -117,6 +117,24 @@ def ships3d(request, code_str):
         raise Http404("Invalid code")
     return render(request, "ships3d.html")
 @xframe_options_exempt
+def obby(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
+    return render(request, "obby.html")
+@xframe_options_exempt
+def Brotato(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
+    return render(request, "Brotato.html")
+@xframe_options_exempt
 def pizza(request, code_str):
     if (
         code_str != get_daily_code() and
@@ -125,6 +143,15 @@ def pizza(request, code_str):
     ):
         raise Http404("Invalid code")
     return render(request, "pizza.html")
+@xframe_options_exempt
+def Soap(request, code_str):
+    if (
+        code_str != get_daily_code() and
+        code_str != get_weekly_code() and
+        code_str != get_monthly_code()
+    ):
+        raise Http404("Invalid code")
+    return render(request, "soap.html")
 @xframe_options_exempt
 def code(request):
     return render(request, "code.html")
@@ -143,7 +170,7 @@ def logout_view(request, code_str):
     return redirect("home", code_str=today_str)
 
 def login_redirect(request):
-    return redirect('home', code_str=today_str)
+    return redirect('home', code_str=get_daily_code())
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
